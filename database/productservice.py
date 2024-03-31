@@ -6,20 +6,20 @@ from database import get_db
 # Добавление продукта
 def add_product_db(product_name: str, product_des: str, product_price: float, product_quantity: int):
     db = next(get_db())
-    check = db.query(Products).filter_by(product_name=product_name).first()
-    if check:
-        return 'Такой продукт уже существует'
-    else:
-        if 0 < check.product_quantity <= 999999 and 0 < check.product_price <= 9999:
-            new_product = Products(product_name=product_name, product_des=product_des,
-                                   product_price=product_price,
-                                   product_quantity=product_quantity, added_at=datetime.now())
+    new_product = Products(product_name=product_name, product_des=product_des,
+                           product_price=product_price,
+                           product_quantity=product_quantity, added_at=datetime.now())
+    if new_product:
+        if (0 < new_product.product_quantity <= 9999 and 0 < new_product.product_price <= 999
+                and new_product.product_name is None):
             db.add(new_product)
             db.commit()
             db.refresh(new_product)
             return f'Продукт {product_name} добавлен'
         else:
-            return 'Неправильно введено кол-во или цена товара'
+            return 'Ошибка при заполнении информации'
+    else:
+        return 'Неправильно введено кол-во или цена товара'
 
 
 # Удаление продукт

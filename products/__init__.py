@@ -5,8 +5,8 @@ from pydantic import BaseModel
 class AddValidator(BaseModel):
     product_name: str
     product_des: str
-    product_quantity: int
     product_price: float
+    product_quantity: int
 
 
 # Валидатор для изменения количества

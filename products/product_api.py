@@ -10,7 +10,7 @@ product_router = APIRouter(prefix='/products', tags=['Для работы с п�
 async def add_product(data: AddValidator):
     result = add_product_db(**data.model_dump())
     if result:
-        return 'Товар закинут на склад'
+        return result
     else:
         return 'Что то пошло не так'
 
@@ -34,7 +34,7 @@ async def get_product(product_id: int):
 async def add_amount(data: QuantityValidator):
     result = update_product_quantity_db(**data.model_dump())
     if result:
-        return 'Добавлено на склад'
+        return result
     else:
         return 'Что то пошло не так'
 
