@@ -12,7 +12,7 @@ version: : "3"
       volumes:
         - . :/infinitebazaar
       ports:
-        - "7887:7887"
+        - "6969:6969"
       command:
         - uvicorn
         - main:app
