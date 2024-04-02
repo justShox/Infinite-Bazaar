@@ -58,7 +58,7 @@ def balance_check_db(user_id: int):
     db = next(get_db())
     check = db.query(User).filter_by(user_id=user_id).first()
     if check:
-        return f'Ваши баллы {check.points}'
+        return f'Ваш баланс - {check.points}'
     else:
         return 'Такой пользователь не найден'
 

@@ -5,11 +5,14 @@ from fastapi import APIRouter
 review_router = APIRouter(prefix="/reviews", tags=["Для работы с отзывами"])
 
 
-# Получить все отзывы к товару
-@review_router.get("/get-all-reviews")
-async def get_all_reviews(product_id: int):
-    result = get_all_reviews_db(product_id)
-    return result
+# Получить определенный отзыв к товару
+@review_router.get("/get-exact-review")
+async def get_exact_reviews(product_id: int):
+    result = get_exact_reviews_db(product_id=product_id)
+    if result:
+        return result
+    else:
+        return 'Скорее всего отзывов ещё нет'
 
 
 # Добавить отзыв к продукту
@@ -24,7 +27,7 @@ async def add_review(data: AddReviewValidator):
 async def edit_review(data: EditReviewValidator):
     result = change_review_db(**data.model_dump())
     if result:
-        return 'Успешно изменено'
+        return result
     else:
         return 'Что то пошло не так'
 
@@ -38,3 +41,9 @@ async def delete_review(review_id: int, product_id: int):
     else:
         return 'Что то пошло не так'
 
+
+# Получить все отзывы
+@review_router.get("/get-all-reviews")
+def get_all_reviews():
+    result = get_all_reviews_db()
+    return result

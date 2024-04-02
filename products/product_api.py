@@ -16,7 +16,7 @@ async def add_product(data: AddValidator):
 
 
 # Удаление продукта
-@product_router.put('/delete-product')
+@product_router.delete('/delete-product')
 async def delete_product(product_id: int):
     result = delete_product_db(product_id=product_id)
     return result
@@ -62,3 +62,9 @@ async def change_price(data: ProductPriceValidator):
         return result
     else:
         return 'Что то пошло не так'
+
+
+# Получить все товары
+@product_router.get('/get-all-product')
+async def get_all_product():
+    return get_all_products_db()
